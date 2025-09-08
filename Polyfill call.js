@@ -1,19 +1,20 @@
 const obj = {
-    firstName: "EisenBerg",
-    lastName: "Mark"
+    firstName: "Atul",
+    lastName: "Rawat"
 }
 
-function printName(age) {
-    console.log(this.firstName, this.lastName, age)
+function printName(profession, age) {
+    console.log(this.firstName, this.lastName, profession, age)
 }
 
-Function.prototype.Mycall = function(obj, ...args) {
-    let context = obj;
-    const fun = "func"
+Function.prototype.myCall = function(obj, ...args) {
+    let context = obj || globalThis;
+    let fun = Symbol();
     context[fun] = this;
-    // let fun = this.bind(obj)  
-    context[fun](...args) 
-    // fun(...args)
+    const result = context[fun](...args)
+    delete context[fun];
+    return result;
 }
 
-printName.Mycall(obj, 45);
+printName.myCall(obj, "Athelete", 34)
+

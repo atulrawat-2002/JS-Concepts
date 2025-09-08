@@ -18,6 +18,13 @@ arr.forEach((value) => {
     head.next = temp;
     temp = x;
 })
+let len = 0;
+let tail = head;
+        while(tail.next) {
+            len++;
+            tail = tail.next;
+        }
+console.log(len);
 
 let point = head;
 while(point) {

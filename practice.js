@@ -1,20 +1,26 @@
-let name1 = {
+const obj = {
     firstName: "Atul",
-    lastName: "Rawat",
+    lastName: "Rawat"
 }
 
-const printFullName = function (homeTown, state) {
-        console.log(this.firstName, this.lastName, "from",  homeTown, state);
-        return 3;
-    }
+function printName(profession, age) {
+    console.log(this.firstName, this.lastName, profession, age)
+    return 2
+}
 
-Function.prototype.myApply = function (obj, args) {
+
+Function.prototype.myBind = function (obj, ...args2) {
     let context = obj || globalThis;
-    let fun = "abc"
-    context[fun] = this;
-    return context[fun](); 
+    let that = this;    
+    return function (...args) {
+        let fun = Symbol();
+        context[fun] = that;
+        let result = context[fun](...args2);
+        delete context[fun];
+        return result;
+    }
 }
 
-let x = printFullName.myApply()
 
-console.log(x)
+let newFun = printName.myBind(obj, "Engineer", 32)
+console.log(newFun("Engineer", 32))
