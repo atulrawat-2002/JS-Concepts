@@ -1,22 +1,20 @@
 let name1 = {
     firstName: "Atul",
     lastName: "Rawat",
-    
 }
 
 const printFullName = function (homeTown, state) {
         console.log(this.firstName, this.lastName, "from",  homeTown, state);
+        return 3;
     }
-// printFullName.call(name1, "Faridabad", "Haryana")
 
-const name2 = {
-    firstName: "Slaman",
-    lastName: "Khan"
+Function.prototype.myApply = function (obj, args) {
+    let context = obj || globalThis;
+    let fun = "abc"
+    context[fun] = this;
+    return context[fun](); 
 }
 
-// printFullName.apply(name2, ["Mumbai", "Maharashtra"]);
+let x = printFullName.myApply()
 
-const newPrintfunction = printFullName.bind(name2, "Maharashtra");
-// newPrintfunction("Mumbai");
-printFullName("Faridabad", "haryana")
-
+console.log(x)
