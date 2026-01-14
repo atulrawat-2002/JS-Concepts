@@ -1,20 +1,16 @@
-document.querySelectorAll('div')[0].addEventListener("click",(e) => {
-    console.log("great grand parent");
-}, true)
+// document.querySelector('#laptop').addEventListener("click", () => {
+//     console.log(`This is ${document.getElementById("laptop").innerText} catagory`)
+// })
 
-document.querySelectorAll('div')[1].addEventListener("click",(e) => {
-    console.log("grand Parent");
-}, true)
+// document.querySelector('#electronics').addEventListener("click", () => {
+//     console.log(`This is ${document.getElementById("electronics").innerText} catagory`)
+// })
 
-document.querySelectorAll('div')[2].addEventListener("click",(e) => {
-    e.stopPropagation();
-    console.log("Parent");
-}, false)
-
-document.querySelectorAll('div')[3].addEventListener("click",(e) => {
-    console.log("child");
-}, false)
-
-
-
-
+// document.querySelector('#grocery').addEventListener("click", () => {
+//     console.log(`This is ${document.getElementById("grocery").innerText} catagory`)
+// }, true)
+let a = 0, b = 0;
+while(true) {
+    console.log(a++, b++);
+    
+}
