@@ -1,16 +1,24 @@
-// document.querySelector('#laptop').addEventListener("click", () => {
-//     console.log(`This is ${document.getElementById("laptop").innerText} catagory`)
-// })
+function getThis () {
+  // "use strict";
+  console.log(this);
+  
+  return this;
+};
 
-// document.querySelector('#electronics').addEventListener("click", () => {
-//     console.log(`This is ${document.getElementById("electronics").innerText} catagory`)
-// })
+// console.log(getThis());
 
-// document.querySelector('#grocery').addEventListener("click", () => {
-//     console.log(`This is ${document.getElementById("grocery").innerText} catagory`)
-// }, true)
-let a = 0, b = 0;
-while(true) {
-    console.log(a++, b++);
-    
-}
+const obj1 = {
+  name: "obj1",
+  arrthis: () => {
+    console.log(this);
+  },
+};
+const obj2 = { name: "obj2" };
+
+obj1.getThis = getThis;
+obj2.getThis = getThis;
+
+console.log(obj1.getThis());
+
+
+obj1.arrthis()
