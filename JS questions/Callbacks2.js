@@ -54,13 +54,13 @@ function review(orderObj) {
 // .then((response) => review(response))
 // .catch(err => console.log(err))
 
-async function processOrder(orderObj) {
+// async function processOrder(orderObj) {
 const customer = await placeOrder(orderObj);
 const cost = await payment(customer);
 const items = await preparingFood(cost);
 const location = await outForDelievery(items);
 review(location);
-}
+// }
 
-processOrder(orderObj)
+// processOrder(orderObj)
 console.log("Please move to the next order ");
