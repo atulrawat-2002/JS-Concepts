@@ -32,16 +32,28 @@
     
 // })()
 
-function Person(name) {
-        this.name = name;
-        this.talk = function () {
-            return 'Talking'
-        }
-}
+// function Person(name) {
+//         this.name = name;
+//         this.talk = function () {
+//             return 'Talking'
+//         }
+// }
 
-const me = new Person('Atul');
+// const me = new Person('Atul');
 
-console.log(me)
+// // console.log(me.talk())
+
+// const you = new Person('Rohit');
+
+// Person.prototype.walk = function() {
+//     return 'Walking'
+// }
+
+// Person.prototype.age = 34;
+
+// console.log(you.age)
+
+
 
 // const obj = {
 //     age: 23
