@@ -1,5 +1,6 @@
 import { User } from "../../model/user.js";
 import jwt from "jsonwebtoken";
+import redisClient from "../config/redis.js";
 
 export async function userAuth(req, res, next) {
     try {
@@ -19,8 +20,11 @@ export async function userAuth(req, res, next) {
             throw new Error("User not found");
         } 
 
+        const isBlocked = await redisClient.exists(`token:${cookie.token}`);
+        if (isBlocked)
+            throw new Error("Token is blocked ")
+
         req.user = user;
-        console.log("user authentication")
         next();
 
     } catch (error) {

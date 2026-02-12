@@ -7,11 +7,12 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { userAuth } from "./src/middlewares/userAuth.js";
 import dotenv from "dotenv";
+import redisClient from "./src/config/redis.js";
 // import './src/testing script.js'
 // import './src/password.js';
-dotenv.config()
+dotenv.config();
 const app = express();
-const PORT = process.env.PORT || '3000';
+const PORT = process.env.PORT || "3000";
 
 app.use(morgan("common"));
 app.use(express.json());
@@ -30,6 +31,12 @@ app.get("/user", userAuth, async (req, res) => {
     });
   }
 });
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "Hi from server"
+  })
+})
 
 app.patch("/user", async (req, res) => {
   try {
@@ -65,20 +72,22 @@ app.delete("/delete/:id", async (req, res) => {
 app.post("/login", async (req, res) => {
   try {
     const { emailId, password } = req.body;
+    console.log(req.ip, req.socket.remoteAddress);
+
 
     const user = await User.findOne({ emailId: emailId });
 
     const valid = await bcrypt.compare(password, user.password);
 
-    if(!valid) {
+    if (!valid) {
       res.json({
-        message: "Incorrect Password"
-      })
+        message: "Incorrect Password",
+      });
       return;
     }
 
     const token = user.getJwt();
-    
+
     res.cookie("token", token);
 
     res.json({
@@ -97,10 +106,10 @@ app.post("/signUp", async (req, res) => {
   try {
     const { name, emailId, password, age } = req.body;
 
-    const salt = await bcrypt.genSalt(10)
+    const salt = await bcrypt.genSalt(10);
 
     const hashPassword = await bcrypt.hash(password, salt);
-    console.log(hashPassword)
+    console.log(hashPassword);
 
     const user = await User.create({
       name: name,
@@ -121,11 +130,38 @@ app.post("/signUp", async (req, res) => {
   }
 });
 
-try {
-  await main();
-  app.listen(PORT, async () => {
-    console.log("App is listening on port 3000");
-  });
-} catch (error) {
-  console.log(error.message);
+app.post("/logout", userAuth, async (req, res) => {
+  try {
+      const { token } = req.cookies;
+      const payload = jwt.decode(token);
+
+      await redisClient.set(`token:${token}`, "Blocked");
+      // await redisClient.expire(`token$:{token}`, 1800)
+      await redisClient.expireAt(`token:${token}`, payload.exp)
+
+    res.cookie("token", null, { expires: new Date(Date.now()) });
+    res.json({
+      message: "Logout successfully",
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.json({
+      message: error.message,
+    });
+  }
+});
+
+async function initializeConnections() {
+  try {
+    await Promise.all([redisClient.connect(), main()]);
+    console.log("connected to db")
+
+    app.listen(PORT, async () => {
+      console.log("App is listening on port 3000");
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 }
+
+initializeConnections();

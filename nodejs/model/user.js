@@ -14,13 +14,12 @@ const userSchema = Schema({
   })
 
 userSchema.methods.getJwt = function () {
-  const token = jwt.sign({emailId: this.emailId, id: this._id}, process.env.JWT_KEY);
+  const token = jwt.sign({emailId: this.emailId, id: this._id}, process.env.JWT_KEY, {expiresIn: '1d'});
   return token;
 };
 
 userSchema.statics.verifyJwt = function (token) {
   const data = jwt.verify(token, process.env.JWT_KEY);
-  console.log("verifying the user", data);
   return data;
 }
 

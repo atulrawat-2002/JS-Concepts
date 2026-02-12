@@ -1,19 +1,24 @@
 const target = {
     name: 'Atul',
-    age: 23,
+    age: 23
 }
 
 const handler = {
-    get(target, prop, receiver) {
-        return 'world';
+    set(target, prop, value) {
+        if(prop === "age" && (typeof value === "string" || value <= 0) ) {
+            throw new Error(`Invalid operation with ${prop} and ${value}`)
+        }
+        target[prop] = value;
+        return true;
+    },
+    get(target, prop) {
+        console.log(`The ${prop} is accessed`);
+        return target[prop];
     }
-};
+}
 
-const newProxy = new Proxy(target, handler)
+const myProxy = new Proxy(target, handler);
 
+myProxy.age = -1
 
-// newProxy.age = 89; 
-
-// target.age = 99
-console.log(newProxy.name);
-console.log(target.name);
+console.log(myProxy.age)
