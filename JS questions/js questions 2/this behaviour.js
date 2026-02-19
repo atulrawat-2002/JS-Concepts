@@ -1,3 +1,4 @@
+
 // function greet(greeting) {
 //     // console.log(this);
 //     console.log(greeting, this.name)
@@ -71,6 +72,29 @@
 
 
 
-document.querySelector('.parent').addEventListener("click", function (event) {
-    console.log(event.target, event.currentTarget)
-})
+// document.querySelector('.parent').addEventListener("click", function (event) {
+//     console.log(event.target, event.currentTarget)
+// })
+
+// const user = {
+//     name: 'atul'
+// }
+
+// const greet = () => {
+//     console.log(this.setTimeout)
+// }
+
+// greet()
+
+
+
+// (() => {
+
+//     // code 
+
+    
+// })()
+
+
+
+
