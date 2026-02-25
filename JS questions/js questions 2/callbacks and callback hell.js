@@ -49,7 +49,7 @@ function placeOrder(callback) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
         order.name = "Atul"
-      resolve(order);
+      reject(false);
     }, 1000);
   });
 }
@@ -61,7 +61,7 @@ function payment(callback) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
         order.price = 999
-      resolve(order);
+      reject();
     }, 1000);
   });
 }
@@ -71,7 +71,7 @@ function prepared(callback) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
         order.item = ['Pizza', 'coke']
-      resolve(order);
+      reject();
     }, 1000);
   });
 }
@@ -84,26 +84,39 @@ function outForDelevery(callback) {
             city: 'faridabad',
             house: 871
         }
-      resolve(order);
+      reject('Reject');
     }, 1000);
   });
 }
 
 function delievered() {
   console.log("Your orde has been delieverd please rate us", order);
+  return new Promise((resolve, reject ) => {
+    setTimeout(() => {
+        reject(true)
+    }, 2000);
+  })
   
 }
 
-async function main() {
-  let response = await placeOrder();
-  response = await payment();
-  response = await prepared();
-  response = await outForDelevery();
-  response = await delievered()
+
+const functionArray = [placeOrder, payment, prepared, outForDelevery, delievered];
+const promiseArray = functionArray.map(fun => fun());
+
+const result = await Promise.allSettled(promiseArray);
+
+console.log(result);
+
+
+
+
+// async function main() {
+//   let response = await placeOrder();
+//   response = await payment();
+//   response = await prepared();
+//   response = await outForDelevery();
+//   response = await delievered()
     
 
-    console.log("Thanks for using our service")
-}
-
-
-main()
+//     return "Thanks for using our service";
+// }
