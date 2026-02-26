@@ -1,0 +1,33 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;    
+} */
+body {  
+    background-color: black;
+}
+
+.grid-container {
+    display: grid;
+    grid-auto-columns: 150px;
+    grid-auto-rows: 150px;
+    grid-auto-flow: column;
+    gap: 1rem;
+
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.item {
+    height: 50px;
+    width: 50px;
+    padding: 2rem;
+    background-color: rgb(66, 66, 66);
+    color: white ;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 2rem;
+}
