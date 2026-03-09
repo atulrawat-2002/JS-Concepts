@@ -1,26 +1,7 @@
-let o = {
-    name: 'atul',
+const obj = {
+    name: 'Atul',
     age: 23,
-    walk() {
-        console.log("walking")
-    }
+    __proto__: Object.prototype
 }
 
-let o2 = {
-    
-}
-
-o.__proto__ = o2;
-
-
-Object.prototype.talk = function() {
-    console.log('Talking')
-}
-Object.prototype.dance = function() {
-    console.log('dancing')
-}
-
-o.walk();
-o.dance()
-
-console.log(o.__proto__)
+console.log(obj.__proto__)
