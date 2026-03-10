@@ -1,13 +1,18 @@
-function *fibonacciGenerator() {
-    const [a, b] = [0, 1];
-    while (true) {
-        yield a;
-        [a, b] = [b, a + b];
+// function *generateIds() {
+//     let id = 0;
+
+//     while(true) {
+//         yield id++;
+//     }
+// }
+
+
+
+function *iterator(array) {
+    for (let i = 0; i < array.length; i++) {
+        yield array[i];
     }
-
 }
-const gen = fibonacciGenerator();
 
-for(let i = 0; i < 10; i++) {
-    console.log(gen.next())
-}
+const gen = iterator([1,2,3,4])
+    
