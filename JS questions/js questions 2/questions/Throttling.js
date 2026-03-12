@@ -1,35 +1,24 @@
-function apiCall() {
-  console.log("Network call...");
-  console.log("\n");
+function greet () {
+  Object.keys(this).map(item => console.log(item));
 }
 
-const btn = document.getElementById("call");
 
-let id = null;
+let obj = {
+  name: 'Atul',
+  greet: 'Good Morning'
+}
 
-btn.addEventListener("click", () => {
-  if (id !== null) {
-    return;
-  }
 
-  apiCall();
-  id = setTimeout(() => {
-    id = null
-  }, 1500);
-});
 
-// btn.addEventListener('click', () => {
-//     if (id !== null) {
-//         clearTimeout(id);
-//     } 
+const myBind = function(context, ...args) {
+    return () => {
+      let fun = Symbol();
+      context[fun] = this;
+      context[fun](...args);
+    }
+}
 
-//     id = setTimeout(() => {
-//         apiCall();
-//     }, 1500);
-// })
+Function.prototype.myBind = myBind;
 
-const print = document.querySelector("#Print");
-
-print.addEventListener("click", () => {
-  console.log("Printing to the console");
-});
+let copy = greet.myBind(obj);
+copy()
